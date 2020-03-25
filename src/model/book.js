@@ -3,14 +3,14 @@ const bookModel = {
   getBooks: (search) => {
     return new Promise((resolve, reject) => {
       if (search) {
-        connection.query('SELECT * FROM `books` WHERE lower(`title`) LIKE ? OR lower(`description`) LIKE ?', [`%${search}%`, `%${search}%`], (err, result) => {
+        connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` WHERE lower(`books`.`title`) LIKE ? OR lower(`books`.`description`) LIKE ?', [`%${search}%`, `%${search}%`], (err, result) => {
           if(err) {
             reject(new Error(err));
           }
           resolve(result);
         });
       }
-      connection.query('SELECT * FROM `books`', (err, result) => {
+      connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id`', (err, result) => {
         if(err) {
           reject(new Error(err));
         }
