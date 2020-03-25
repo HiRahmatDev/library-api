@@ -7,6 +7,14 @@ const userController = {
         MiscHelper.response(res, result,200);
       })
       .catch(err => res.send(err));
+  },
+  userDetail: (req, res) => {
+    const idBook = req.params.idBook;
+    userModel.userDetail(idBook)
+      .then(result => {
+        MiscHelper.response(res, result,200);
+      })
+      .catch(err => res.send(err));
   }
 };
 

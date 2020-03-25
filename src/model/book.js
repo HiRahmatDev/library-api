@@ -2,15 +2,15 @@ const connection = require('../config/db');
 const bookModel = {
   getBooks: (search) => {
     return new Promise((resolve, reject) => {
-      if (!search) {
-        connection.query('SELECT * FROM `books`', (err, result) => {
+      if (search) {
+        connection.query('SELECT * FROM `books` WHERE lower(`title`) LIKE ? OR lower(`description`) LIKE ?', [`%${search}%`, `%${search}%`], (err, result) => {
           if(err) {
             reject(new Error(err));
           }
           resolve(result);
         });
       }
-      connection.query('SELECT * FROM `books` WHERE lower(`title`) LIKE ? OR lower(`description`) LIKE ?', [`%${search}%`, `%${search}%`], (err, result) => {
+      connection.query('SELECT * FROM `books`', (err, result) => {
         if(err) {
           reject(new Error(err));
         }
