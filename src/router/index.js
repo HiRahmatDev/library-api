@@ -5,6 +5,6 @@ const user = require('./user');
 const Router = express.Router();
 Router
   .use('/book', book)
-  .use(user);
+  .use('/user', user);
 
 module.exports = Router;

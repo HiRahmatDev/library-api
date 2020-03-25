@@ -1,5 +1,5 @@
 const connection = require('../config/db');
-const modulBook = {
+const bookModel = {
   getBooks: (search) => {
     return new Promise((resolve, reject) => {
       if (!search) {
@@ -60,4 +60,4 @@ const modulBook = {
   }
 };
 
-module.exports = modulBook;
+module.exports = bookModel;

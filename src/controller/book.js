@@ -1,6 +1,6 @@
 const bookModel = require('../model/book');
 const MiscHelper = require('../helper/helper');
-const data = {
+const bookController = {
   getBooks: (req, res) => {
     const search = req.query.search;
     bookModel.getBooks(search)
@@ -42,4 +42,4 @@ const data = {
   }
 };
 
-module.exports = data;
+module.exports = bookController;
