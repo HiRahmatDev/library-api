@@ -31,16 +31,16 @@ const bookModel = {
   insertBook: (data) => {
     return new Promise((resolve, reject) => {
       connection.query('INSERT INTO `books` SET ?', data, (err, result) => {
-        if(err) {
+        if (err) {
           reject(new Error(err));
         }
         resolve(result);
       });
     });
   },
-  updateBook: (data, idBook) => {
+  updateBook: (data, id) => {
     return new Promise((resolve, reject) => {
-      connection.query('UPDATE `books` SET ? WHERE id = ?', [data, idBook], (err, result) => {
+      connection.query('UPDATE `books` SET ? WHERE id = ?', [data, id], (err, result) => {
         if(err) {
           reject(new Error(err));
         }

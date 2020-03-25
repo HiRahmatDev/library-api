@@ -19,6 +19,26 @@ const userModel = {
         resolve(result);
       });
     });
+  },
+  insertUser: (data) => {
+    return new Promise((resolve, reject)=> {
+      connection.query('INSERT INTO `users` SET ?', data, (err, result) => {
+        if (err) {
+          reject(new Error(err));
+        } 
+        resolve(result);
+      });
+    });
+  },
+  updateUser: (data, id) => {
+    return new Promise((resolve, reject) => {
+      connection.query('UPDATE `users` SET ? WHERE id = ?', [data, id], (err, result) => {
+        if (err) {
+          reject(new Error(err));
+        }
+        resolve(result);
+      });
+    });
   }
 };
 
