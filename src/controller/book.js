@@ -3,8 +3,7 @@ const MiscHelper = require('../helper/helper');
 const data = {
   getBooks: (req, res) => {
     const search = req.query.search;
-    console.log(search);
-    bookModel.getBooks()
+    bookModel.getBooks(search)
       .then(result => {
         MiscHelper.response(res, result, 200);
       })
