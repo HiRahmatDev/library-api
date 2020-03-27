@@ -2,8 +2,8 @@ const bookModel = require('../model/book');
 const MiscHelper = require('../helper/helper');
 const bookController = {
   getBooks: (req, res) => {
-    const search = req.query.search;
-    bookModel.getBooks(search)
+    const {search, sort, page, limit} = req.query;
+    bookModel.getBooks(search, sort, page, limit)
       .then(result => {
         MiscHelper.response(res, result, 200);
       })
