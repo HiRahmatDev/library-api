@@ -3,8 +3,6 @@ const Router = express.Router();
 const usersController = require('../controller/user');
 
 Router
-  .get('/', usersController.getUsers)
-  .get('/:idUser', usersController.userDetail)
-  .patch('/:idUser', usersController.updateUser);
+  .post('/', usersController.insertUser);
 
 module.exports = Router;
