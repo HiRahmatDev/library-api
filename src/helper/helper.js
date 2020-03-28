@@ -18,7 +18,7 @@ module.exports = {
     }
     resultPrint.status = 'Success!';
     resultPrint.statusCode = status;
-    resultPrint.nextLink = '';
+    // resultPrint.nextLink = 'http://localhost:8000/api/v1/book?page=2';
     resultPrint.result = result;
     resultPrint.err = err || null;
     return res.status(resultPrint.statusCode).json(resultPrint);

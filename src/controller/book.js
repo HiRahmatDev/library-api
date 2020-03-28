@@ -43,9 +43,22 @@ const bookController = {
       .catch(err => res.send(err));
   },
   loanBook: (req, res) => {
-    bookModel.loanBook(req.query.book)
+    const {user, book} = req.query;
+    const dataLoan = {
+      id_user: user,
+      id_book: book,
+      forfeit: 0
+    };
+    bookModel.loanBook(dataLoan)
       .then(result => {
         res.send(result);
+      })
+      .catch(err => res.send(err));
+  },
+  loanList: (req, res) => {
+    bookModel.loanList()
+      .then(result => {
+        MiscHelper.response(res, result, 200);
       })
       .catch(err => res.send(err));
   }

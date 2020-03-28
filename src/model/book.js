@@ -92,9 +92,19 @@ const bookModel = {
       });
     });
   },
-  loanBook: () => {
+  loanBook: (dataLoan) => {
     return new Promise((resolve, reject) => {
-      connection.query('INSERT INTO `loan` SET ?', (err, result) => {
+      connection.query('INSERT INTO `loan` SET ?', dataLoan, (err, result) => {
+        if (err) {
+          reject(new Error(err));
+        }
+        resolve(result);
+      });
+    });
+  },
+  loanList: () => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT `loan`.`id`, `users`.`email`, `users`.`fullname`, `books`.`title`, `loan`.`forfeit` FROM `loan` JOIN `users` ON `loan`.`id_user` = `users`.`id` JOIN `books` ON `loan`.`id_book` = `books`.`id`', (err, result) => {
         if (err) {
           reject(new Error(err));
         }

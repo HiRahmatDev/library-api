@@ -23,7 +23,7 @@ const userController = {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
     const data = {
-      card_number: parseInt('1152030115'),
+      card_number: parseInt('1142030002'),
       email,
       fullname,
       password: hashedPassword,
