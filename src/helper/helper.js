@@ -18,6 +18,7 @@ module.exports = {
     }
     resultPrint.status = 'Success!';
     resultPrint.statusCode = status;
+    resultPrint.nextLink = '';
     resultPrint.result = result;
     resultPrint.err = err || null;
     return res.status(resultPrint.statusCode).json(resultPrint);

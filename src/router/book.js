@@ -8,6 +8,6 @@ Router
   .post('/insert', booksController.insertBook)
   .patch('/:idBook', booksController.updateBook)
   .delete('/:idBook', booksController.deleteBook)
-  .get('/loan', booksController.loanBook);
+  .post('/loan', booksController.loanBook);
 
 module.exports = Router;

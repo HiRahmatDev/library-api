@@ -8,7 +8,7 @@ const bookController = {
         MiscHelper.response(res, result, 200);
       })
       .catch(err => {
-        MiscHelper.response(res, err, 400)
+        MiscHelper.response(res, err, 400);
       });
   },
   bookDetail: (req, res) => {
@@ -43,7 +43,7 @@ const bookController = {
       .catch(err => res.send(err));
   },
   loanBook: (req, res) => {
-    bookModel.loanBook()
+    bookModel.loanBook(req.query.book)
       .then(result => {
         res.send(result);
       })
