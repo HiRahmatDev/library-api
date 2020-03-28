@@ -1,6 +1,6 @@
 const connection = require('../config/db');
 const bookModel = {
-  getBooks: (search, sort = 'id', page = 1, limit = 10) => {
+  getBooks: (search, sort = 'id', page = 1, limit = 3) => {
     const startPage = (page - 1) * limit;
     const endPage = limit;
     return new Promise((resolve, reject) => {
@@ -86,6 +86,16 @@ const bookModel = {
     return new Promise((resolve, reject) => {
       connection.query('DELETE FROM `books` WHERE id = ?', id, (err, result) => {
         if(err) {
+          reject(new Error(err));
+        }
+        resolve(result);
+      });
+    });
+  },
+  loanBook: () => {
+    return new Promise((resolve, reject) => {
+      connection.query('INSERT * FROM `loan`', (err, result) => {
+        if (err) {
           reject(new Error(err));
         }
         resolve(result);

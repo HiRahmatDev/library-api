@@ -7,7 +7,9 @@ const bookController = {
       .then(result => {
         MiscHelper.response(res, result, 200);
       })
-      .catch(err => res.send(err));
+      .catch(err => {
+        MiscHelper.response(res, err, 400)
+      });
   },
   bookDetail: (req, res) => {
     const idBook = req.params.idBook;
@@ -35,6 +37,13 @@ const bookController = {
   deleteBook: (req, res) => {
     const idBook = req.params.idBook;
     bookModel.deleteBook(idBook)
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => res.send(err));
+  },
+  loanBook: (req, res) => {
+    bookModel.loanBook()
       .then(result => {
         res.send(result);
       })

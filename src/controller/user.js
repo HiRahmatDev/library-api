@@ -1,5 +1,6 @@
 const userModel = require('../model/user');
 const MiscHelper = require('../helper/helper');
+// const con = require('../config/db');
 const bcrypt = require('bcrypt');
 const userController = {
   getUsers: (req, res) => {
@@ -13,19 +14,19 @@ const userController = {
     const idUser = req.params.idUser;
     userModel.userDetail(idUser)
       .then(result => {
-        MiscHelper.response(res, result,200);
+        MiscHelper.response(res, result, 200);
       })
       .catch(err => res.send(err));
   },
   insertUser: (req, res) => {
     const {email, fullname, password, phone} = req.body;
-    const salt = bcrypt.genSaltSync(5);
-    const passwordHashed = bcrypt.hashSync(password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
     const data = {
-      card_number: 256,
+      card_number: parseInt('1152030115'),
       email,
       fullname,
-      password: passwordHashed,
+      password: hashedPassword,
       salt,
       token: '#da',
       phone,
@@ -36,6 +37,17 @@ const userController = {
     userModel.insertUser(data)
       .then(result => res.send(result))
       .catch(err => res.send(err));
+  },
+  loginUser: (req, res) => {
+    const {email, password} = req.body;
+    const dataLogin = {email, password};
+    userModel.loginUser(dataLogin)
+      .then(result => {
+        MiscHelper.response(res, result, 200);
+      })
+      .catch(err => {
+        MiscHelper.response(res, err, 400);
+      });
   },
   updateUser: (req, res) => {
     const idUser = req.params.idUser;

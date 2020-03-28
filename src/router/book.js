@@ -7,6 +7,7 @@ Router
   .get('/:idBook', booksController.bookDetail)
   .post('/insert', booksController.insertBook)
   .patch('/:idBook', booksController.updateBook)
-  .delete('/:idBook', booksController.deleteBook);
+  .delete('/:idBook', booksController.deleteBook)
+  .get('/loan', booksController.loanBook);
 
 module.exports = Router;
