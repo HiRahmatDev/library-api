@@ -65,7 +65,7 @@ $ npm run serve
 |    |   +---index.js
 |    |   +---register.js
 |    |   +---user.js
-+---app.js
++---server.js
 ```
 
 ## Contributors
