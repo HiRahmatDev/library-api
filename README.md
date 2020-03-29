@@ -79,7 +79,7 @@ $ npm run serve
     <tr>
       <td align="center">
         <a href="https://github.com/HiRahmat-Dev/">
-          <img width="300" src="https://avatars2.githubusercontent.com/u/55150659?s=460&u=c7171bb4128787c303efdce0d62bc86289f1211b&v=4" alt="Rahmat Hidayatullah"><br/>
+          <img width="150" src="https://avatars2.githubusercontent.com/u/55150659?s=460&u=c7171bb4128787c303efdce0d62bc86289f1211b&v=4" alt="Rahmat Hidayatullah"><br/>
           <b>Rahmat Hidayatullah</b>
         </a>
       </td>
