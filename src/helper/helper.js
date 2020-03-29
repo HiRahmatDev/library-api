@@ -2,15 +2,8 @@ const bcrypt = require('bcrypt');
 module.exports = {
   response: (res, result, status, err) => {
     let resultPrint = {};
-    if (status == 404) {
-      resultPrint.status = 'Not Found!';
-      resultPrint.statusCode = status;
-      resultPrint.result = result;
-      resultPrint.err = err || null;
-      return res.status(resultPrint.statusCode).json(resultPrint);
-    }
-    if (status == 400) {
-      resultPrint.status = 'Not Allowed!';
+    if (status != 200) {
+      resultPrint.status = 'Failed';
       resultPrint.statusCode = status;
       resultPrint.result = result;
       resultPrint.err = err || null;
@@ -18,7 +11,6 @@ module.exports = {
     }
     resultPrint.status = 'Success!';
     resultPrint.statusCode = status;
-    // resultPrint.nextLink = 'http://localhost:8000/api/v1/book?page=2';
     resultPrint.result = result;
     resultPrint.err = err || null;
     return res.status(resultPrint.statusCode).json(resultPrint);

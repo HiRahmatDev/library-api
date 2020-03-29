@@ -1,6 +1,5 @@
 const userModel = require('../model/user');
 const MiscHelper = require('../helper/helper');
-// const con = require('../config/db');
 const bcrypt = require('bcrypt');
 const userController = {
   getUsers: (req, res) => {
@@ -23,12 +22,11 @@ const userController = {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
     const data = {
-      card_number: parseInt('1142030002'),
       email,
       fullname,
       password: hashedPassword,
       salt,
-      token: '#da',
+      // token: '#da',
       phone,
       role_id: 2,
       photo: 'default.jpg',
@@ -43,10 +41,15 @@ const userController = {
     const dataLogin = {email, password};
     userModel.loginUser(dataLogin)
       .then(result => {
-        MiscHelper.response(res, result, 200);
+        const checkedPass = bcrypt.compareSync(dataLogin.password, result[0].password);
+        console.log(checkedPass);
+        if (checkedPass) {
+          MiscHelper.response(res, result, 200);
+        }
+        MiscHelper.response(res, null, 403, 'Wrong Password!');
       })
       .catch(err => {
-        MiscHelper.response(res, err, 400);
+        MiscHelper.response(res, err, 400, 'Email not found!');
       });
   },
   updateUser: (req, res) => {

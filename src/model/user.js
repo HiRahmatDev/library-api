@@ -1,5 +1,4 @@
 const connection = require('../config/db');
-const bcrypt = require('bcrypt');
 const userModel = {
   getUsers: () => {
     return new Promise((resolve, reject) => {
@@ -37,14 +36,7 @@ const userModel = {
         if (err) {
           reject(new Error(err));
         }
-        if (result.length > 0) {
-          bcrypt.compare(dataLogin.password, result[0].password, (err, unhashed) => {
-            if (unhashed) {
-              resolve(result);
-            }
-            reject(new Error(err));
-          });
-        }
+        resolve(result);
       });
     });
   },
