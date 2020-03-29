@@ -1,7 +1,6 @@
 # Library Loan Book API
-![](https://img.shields.io/badge/Code%20Style-Standard-yellow.svg)
-![](https://img.shields.io/badge/Dependencies-Express-green.svg)
-![](https://img.shields.io/badge/License-Beerware-yellowgreen.svg)
+![](https://img.shields.io/badge/Dependencies-Express%20JS-green)
+![](https://img.shields.io/badge/Version-1.0-blue)
 
 <p align="center">
   <a href="https://nodejs.org/">
