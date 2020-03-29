@@ -26,8 +26,8 @@
 ## Installation
 ### Clone
 ```
-$ git clone ttps://github.com/muhammadrisano/Library-book-backend-expressjs.git
-$ cd Library-book-backend-expressjs
+$ git clone https://github.com/HiRahmat-Dev/library-api.git
+$ cd library-api
 $ npm install
 ```
 
