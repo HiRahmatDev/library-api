@@ -1,7 +1,4 @@
 # Library Loan Book API [![Release Version](https://img.shields.io/badge/release-v.1.0-blue)](https://github.com/HiRahmat-Dev/library-api/releases/tag/1.0) [![Node JS](https://img.shields.io/badge/Dependencies-Express%20JS-green)](https://nodejs.org/en/)
-
-
-
 <p align="center">
   <a href="https://nodejs.org/">
     <img src="https://cdn-images-1.medium.com/max/871/1*d2zLEjERsrs1Rzk_95QU9A.png">
@@ -9,14 +6,10 @@
 </p>
 
 ## Table of Contents
-
 - [Prerequiste](#prerequiste)
 - [Instalation](#installation)
-
-
 - [Link Collection Postman](#link-collection-postman)
 - [Structur Folder](#structur-folder)
-
 
 ## Prerequiste
 - Node.js - Download and Install [Node.js](https://nodejs.org/en/).
@@ -45,6 +38,7 @@ DB_NAME="Your_Table"
 SERVER_PORT=8000
 
 ```
+
 ### Start Development Server
 ```
 $ npm run serve
@@ -72,6 +66,7 @@ $ npm run serve
 |    |   +---user.js
 +---app.js
 ```
+
 ## Contributors
 <center>
   <table>
@@ -88,5 +83,4 @@ $ npm run serve
 
 ### License
 ----
-
 [Website](http://www.sekolahinovator.org) © [Rahmat Hidayatullah](https://github.com/HiRahmat-Dev/)
