@@ -1,8 +1,6 @@
 const connection = require('../config/db');
 const bookModel = {
-  getBooks: (search, sort = 'id', page = 1, limit = 3) => {
-    const startPage = (page - 1) * limit;
-    const endPage = limit;
+  getBooks: (search, sort = 'id', page, limit) => {
     return new Promise((resolve, reject) => {
       if (search) {
         if (sort) {
@@ -22,34 +20,20 @@ const bookModel = {
       }
       if (sort) {
         if (page || limit) {
-          connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` ORDER BY `books`.`' + sort + '` LIMIT ' + startPage + ',' + endPage + '', (err, result) => {
-            if(err) {
+          connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` ORDER BY `books`.`' + sort + '` LIMIT ' + page + ',' + limit + '', (err, result) => {
+            if(err || result.length < 1) {
               reject(new Error(err));
             }
             resolve(result);
           });
         }
-        connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` ORDER BY `books`.`' + sort + '` LIMIT ' + startPage + ',' + endPage + '', (err, result) => {
+        connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` ORDER BY `books`.`' + sort + '` LIMIT ' + page + ',' + limit + '', (err, result) => {
           if(err) {
             reject(new Error(err));
           }
           resolve(result);
         });
       }
-      if (page || limit) {
-        connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` ORDER BY `books`.`' + sort + '` LIMIT ' + startPage + ',' + endPage + '', (err, result) => {
-          if(err) {
-            reject(new Error(err));
-          }
-          resolve(result);
-        });
-      }
-      connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` ORDER BY `books`.`' + sort + '` LIMIT ' + startPage + ',' + endPage + '', (err, result) => {
-        if(err) {
-          reject(new Error(err));
-        }
-        resolve(result);
-      });
     });
   },
   bookDetail: (id) => {

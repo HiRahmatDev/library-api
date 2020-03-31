@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 module.exports = {
   response: (res, result, status, err) => {
     let resultPrint = {};
@@ -15,7 +15,17 @@ module.exports = {
     resultPrint.err = err || null;
     return res.status(resultPrint.statusCode).json(resultPrint);
   },
-  passwordCheck: (dataLogin) => {
-    bcrypt.compare(dataLogin.password);
+  paginated: (result, route, page, start, end) => {
+    result.unshift({
+      total: result.length
+    });
+    result[0].next_link = null;
+    result[0].prev_link = null;
+    if (end < result.length) {
+      result[0].next_link = route + '?page=' + parseInt(parseInt(page) + 1);
+    }
+    if (start > 0) {
+      result[0].prev_link = route + '?page=' + parseInt(parseInt(page) - 1);
+    }
   }
 };

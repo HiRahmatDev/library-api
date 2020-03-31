@@ -2,13 +2,16 @@ const bookModel = require('../model/book');
 const MiscHelper = require('../helper/helper');
 const bookController = {
   getBooks: (req, res) => {
-    const {search, sort, page, limit} = req.query;
-    bookModel.getBooks(search, sort, page, limit)
+    const {search, sort, page = 1, limit = 3} = req.query;
+    const startPage = (page - 1) * limit;
+    const endPage = limit;
+    bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
       .then(result => {
+        MiscHelper.paginated(result, 'http://localhost:8000/api/v1/book', page, startPage, endPage);    
         MiscHelper.response(res, result, 200);
       })
       .catch(err => {
-        MiscHelper.response(res, err, 400);
+        MiscHelper.response(res, err, 404, 'Book not found!');
       });
   },
   bookDetail: (req, res) => {
