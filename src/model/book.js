@@ -1,17 +1,17 @@
 const connection = require('../config/db');
 const bookModel = {
-  getBooks: (search, sort = 'id', page, limit) => {
+  getBooks: (search, sort = 'title', page, limit) => {
     return new Promise((resolve, reject) => {
       if (search) {
         if (sort) {
-          connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` WHERE lower(`books`.`title`) LIKE ? OR lower(`books`.`description`) OR lower(`books`.`author`) LIKE ? ORDER BY `books`.`' + sort + '', [`%${search}%`, `%${search}%`], (err, result) => {
+          connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` WHERE lower(`books`.`title`) LIKE ? OR lower(`books`.`description`) OR lower(`books`.`author`) OR lower(`category`.`name_category`) LIKE ? ORDER BY `books`.`' + sort + '', [`%${search}%`, `%${search}%`, `%${search}%`], (err, result) => {
             if(err) {
               reject(new Error(err));
             }
             resolve(result);
           });
         }
-        connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` WHERE lower(`books`.`title`) LIKE ? OR lower(`books`.`description`) OR lower(`books`.`author`) LIKE ?', [`%${search}%`, `%${search}%`], (err, result) => {
+        connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` WHERE lower(`books`.`title`) LIKE ? OR lower(`books`.`description`) OR lower(`books`.`author`) LIKE ? OR lower(`category`.`name_category`) LIKE ?', [`%${search}%`, `%${search}%`, `%${search}%`], (err, result) => {
           if(err) {
             reject(new Error(err));
           }

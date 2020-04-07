@@ -1,5 +1,7 @@
+require('dotenv').config();
 const userModel = require('../model/user');
 const MiscHelper = require('../helper/helper');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const userController = {
   getUsers: (req, res) => {
@@ -18,18 +20,19 @@ const userController = {
       .catch(err => res.send(err));
   },
   insertUser: (req, res) => {
-    const {email, fullname, password, phone} = req.body;
+    const {email, username, fullname, password} = req.body;
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
     const data = {
       email,
+      username,
       fullname,
       password: hashedPassword,
       salt,
       // token: '#da',
-      phone,
+      // phone,
       role_id: 2,
-      photo: 'default.jpg',
+      photo: 'https://i.stack.imgur.com/l60Hf.png',
       status: 0
     };
     userModel.insertUser(data)
@@ -40,16 +43,20 @@ const userController = {
     const {email, password} = req.body;
     const dataLogin = {email, password};
     userModel.loginUser(dataLogin)
-      .then(result => {
-        const checkedPass = bcrypt.compareSync(dataLogin.password, result[0].password);
-        console.log(checkedPass);
+      .then((result) => {
+        const dataUser = result[0];
+        const checkedPass = bcrypt.compareSync(dataLogin.password, dataUser.password);
+        const token = jwt.sign({ id: dataUser.id, email: dataUser.email }, process.env.SECRET_KEY);
+        dataUser.token = token;
+        delete dataUser.password;
+        delete dataUser.salt;
         if (checkedPass) {
-          MiscHelper.response(res, result, 200);
+          MiscHelper.response(res, dataUser, 200);
         }
-        MiscHelper.response(res, null, 403, 'Wrong Password!');
+        MiscHelper.response(res, null, 202, 'Wrong Password!');
       })
-      .catch(err => {
-        MiscHelper.response(res, err, 400, 'Email not found!');
+      .catch((err) => {
+        MiscHelper.response(res, err, 202, 'Email not found!');
       });
   },
   updateUser: (req, res) => {

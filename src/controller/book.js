@@ -2,13 +2,12 @@ const bookModel = require('../model/book');
 const MiscHelper = require('../helper/helper');
 const bookController = {
   getBooks: (req, res) => {
-    const {search, sort, page = 1, limit = 3} = req.query;
+    const {search, sort, page = 1, limit = 6} = req.query;
     const startPage = (page - 1) * limit;
     const endPage = limit;
     bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
       .then(result => {
-        MiscHelper.paginated(result, 'http://localhost:8000/api/v1/book', page, startPage, endPage);    
-        MiscHelper.response(res, result, 200);
+        MiscHelper.paginated(res, result, 200, 'http://localhost:8000/api/v1/book', page, startPage, endPage);    
       })
       .catch(err => {
         MiscHelper.response(res, err, 404, 'Book not found!');
@@ -23,8 +22,8 @@ const bookController = {
       .catch(err => res.send(err));
   },
   insertBook: (req, res) => {
-    const { title, description, author, img, status, id_category } = req.body;
-    const data = { title, description, author, img, status, id_category };
+    const { title, description, author, img, status = 1, rating = 0, id_category = 1 } = req.body;
+    const data = { title, description, author, img, status, rating, id_category };
     bookModel.insertBook(data)
       .then(result => res.send(result))
       .catch(err => res.send(err));

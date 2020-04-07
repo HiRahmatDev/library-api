@@ -2,7 +2,7 @@ const connection = require('../config/db');
 const userModel = {
   getUsers: () => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM `users`', (err, result) => {
+      connection.query('SELECT `id`, `card_number`, `email`, `username`, `fullname`, `phone`, `role_id`, `photo`, `status` FROM `users`', (err, result) => {
         if (err) {
           reject(new Error(err));
         }
@@ -32,7 +32,7 @@ const userModel = {
   },
   loginUser: (dataLogin) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT `email`, `fullname`, `password`, `photo` FROM `users` WHERE `email` = ?', dataLogin.email, (err, result) => {
+      connection.query('SELECT * FROM `users` WHERE `email` = ?', dataLogin.email, (err, result) => {
         if (err) {
           reject(new Error(err));
         }
