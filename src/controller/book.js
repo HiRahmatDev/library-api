@@ -1,29 +1,46 @@
+require('dotenv').config();
 const bookModel = require('../model/book');
 const MiscHelper = require('../helper/helper');
+const conn = require('../config/db');
+const redis = require('redis');
+const client = redis.createClient(process.env.PORT_REDIS);
 const bookController = {
   getBooks: (req, res) => {
-    const {search, sort, page = 1, limit = 6} = req.query;
-    const startPage = (page - 1) * limit;
-    const endPage = limit;
-    bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
-      .then(result => {
-        MiscHelper.paginated(res, result, 200, 'http://localhost:8000/api/v1/book', page, startPage, endPage);    
-      })
-      .catch(err => {
-        MiscHelper.response(res, err, 404, 'Book not found!');
-      });
+    conn.query('SELECT count(*) AS total from `books`', (err, result) => {
+      const totalPage = result[0].total;
+      const {search, sort, page = 1, limit = 8} = req.query;
+      const startPage = (page - 1) * limit;
+      const endPage = limit;
+      bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
+        .then(result => {
+          client.setex('getAllBook', 3600, JSON.stringify(result));
+          MiscHelper.paginated(res, result, 200, 'http://localhost:3333/api/v1/book',totalPage, page, startPage, endPage);    
+        })
+        .catch(err => {
+          MiscHelper.response(res, err, 404, 'Book not found!');
+        });
+    });
   },
   bookDetail: (req, res) => {
     const idBook = req.params.idBook;
     bookModel.bookDetail(idBook)
       .then(result => {
-        MiscHelper.response(res, result, 200);
+        const resultObj = result[0];
+        MiscHelper.response(res, resultObj, 200);
       })
       .catch(err => res.send(err));
   },
   insertBook: (req, res) => {
-    const { title, description, author, img, status = 1, rating = 0, id_category = 1 } = req.body;
-    const data = { title, description, author, img, status, rating, id_category };
+    const { title, description, author, status = 1, rating = 0, id_category = 1 } = req.body;
+    const data = {
+      title,
+      description,
+      author,
+      img: `http://localhost:3333/uploads/${req.file.filename}`,
+      status,
+      rating,
+      id_category
+    };
     bookModel.insertBook(data)
       .then(result => res.send(result))
       .catch(err => res.send(err));

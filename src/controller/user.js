@@ -15,7 +15,8 @@ const userController = {
     const idUser = req.params.idUser;
     userModel.userDetail(idUser)
       .then(result => {
-        MiscHelper.response(res, result, 200);
+        const resultObj = result[0];
+        MiscHelper.response(res, resultObj, 200);
       })
       .catch(err => res.send(err));
   },
@@ -66,7 +67,14 @@ const userController = {
     userModel.updateUser(data, idUser)
       .then(result => res.send(result))
       .catch(err => res.send(err));
-  }
+  },
+  emailVerified: (req, res) => {
+    res.status(200).json({
+      status: 'Success!',
+      statusCode: 200,
+      msg: 'Your email has been activated'
+    });
+  },
 };
 
 module.exports = userController;

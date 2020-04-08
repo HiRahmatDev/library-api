@@ -1,4 +1,3 @@
-// const bcrypt = require('bcrypt');
 module.exports = {
   response: (res, result, status, err) => {
     let resultPrint = {};
@@ -15,7 +14,7 @@ module.exports = {
     resultPrint.err = err || '';
     return res.status(resultPrint.statusCode).json(resultPrint);
   },
-  paginated: (res, result, status, route, page, start, end, err) => {
+  paginated: (res, result, status, url, total, page, start, limit, err) => {
     let resultPaginated = {};
     if (status != 200) {
       resultPaginated.status = 'Failed';
@@ -26,20 +25,19 @@ module.exports = {
     }
     resultPaginated.status = 'Success!';
     resultPaginated.statusCode = status;
+    resultPaginated.page = parseInt(page);
+    resultPaginated.totalPage = Math.ceil(total / limit);
     resultPaginated.totalFound = result.length;
-    resultPaginated.nextLink = '';
-    if (end <= result.length) {
-      if (end == 6) {
-        resultPaginated.nextLink = route + '?page=' + parseInt(parseInt(page) + 1);
-      }
-      resultPaginated.nextLink = route + '?page=' + parseInt(parseInt(page) + 1) + '&limit=' + end;
+    resultPaginated.totalBook = total;
+    if (page < Math.ceil(total / limit)) {
+      resultPaginated.nextLink = url + '?page=' + parseInt(parseInt(page) + 1) + '&limit=' + limit;
+    } else {
+      resultPaginated.nextLink = null;
     }
-    resultPaginated.prevLink = '';
     if (start > 0) {
-      if (end == 6) {
-        resultPaginated.prevLink = route + '?page=' + parseInt(parseInt(page) - 1);
-      }
-      resultPaginated.prevLink = route + '?page=' + parseInt(parseInt(page) - 1) + '&limit=' + end;
+      resultPaginated.prevLink = url + '?page=' + parseInt(parseInt(page) - 1) + '&limit=' + limit;
+    } else {
+      resultPaginated.prevLink = null;
     }
     resultPaginated.result = result;
     resultPaginated.err = err || '';
