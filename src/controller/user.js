@@ -3,6 +3,7 @@ const userModel = require('../model/user');
 const MiscHelper = require('../helper/helper');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 const userController = {
   getUsers: (req, res) => {
     userModel.getUsers()
@@ -68,12 +69,49 @@ const userController = {
       .then(result => res.send(result))
       .catch(err => res.send(err));
   },
-  emailVerified: (req, res) => {
-    res.status(200).json({
-      status: 'Success!',
-      statusCode: 200,
-      msg: 'Your email has been activated'
+  sendEmailVerif: (req, res) => {
+    const tokenFromHeader = req.headers['x-access-token'];
+    const token = jwt.verify(tokenFromHeader, process.env.SECRET_KEY);
+    const linkActivation = `http://localhost:8080/user/confirm?key=${tokenFromHeader}`;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+      }
     });
+    const mailOptions = {
+      from: 'sekolahinovator1@gmail.com',
+      to: token.email,
+      subject: 'Activation Library Account',
+      text: linkActivation
+    };
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      }
+      const result = {
+        url: linkActivation,
+        msg: 'Email activation has been sent!',
+        info,
+      };
+      MiscHelper.response(res, result, 200);
+    });
+    // const result = {
+    //   url: linkActivation,
+    //   msg: 'Email activation has been sent!',
+    //   headers: tokenFromHeader,
+    // };
+    // MiscHelper.response(res, result, 200);
+  },
+  confirmUser: (req, res) => {
+    const {key} = req.query;
+    const resultToken = jwt.verify(key, process.env.SECRET_KEY);
+    const status = { status: 1 };
+    userModel.confirmUser(status, resultToken.id)
+      .then((result) => {
+        MiscHelper.response(res, result, 200, 'Email has been activated!');
+      });
   },
 };
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 const booksController = require('../controller/book');
-const redisHelper = require('../helper/redis');
+// const redisHelper = require('../helper/redis');
 
 // multer
 const multer = require('multer');

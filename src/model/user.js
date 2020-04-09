@@ -49,6 +49,16 @@ const userModel = {
         resolve(result);
       });
     });
+  },
+  confirmUser: (status, id) => {
+    return new Promise((resolve, reject) => {
+      connection.query('UPDATE `users` SET ? WHERE id = ?', [status, id], (err, result) => {
+        if (err) {
+          reject(new Error(err));
+        }
+        resolve(result);
+      });
+    });
   }
 };
 
