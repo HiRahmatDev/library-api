@@ -42,7 +42,10 @@ const bookController = {
       id_category
     };
     bookModel.insertBook(data)
-      .then(result => res.send(result))
+      .then(result => {
+        result.info = req.file;
+        MiscHelper.response(res, result, 200);
+      })
       .catch(err => res.send(err));
   },
   updateBook: (req, res) => {
