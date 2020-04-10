@@ -72,7 +72,7 @@ const userController = {
   sendEmailVerif: (req, res) => {
     const tokenFromHeader = req.headers['x-access-token'];
     const token = jwt.verify(tokenFromHeader, process.env.SECRET_KEY);
-    const linkActivation = `http://localhost:8080/user/confirm?key=${tokenFromHeader}`;
+    const linkActivation = `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/user/confirm?key=${tokenFromHeader}`;
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

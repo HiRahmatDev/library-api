@@ -18,7 +18,7 @@ const bookController = {
       bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
         .then(result => {
           // client.setex('getAllBook', 3600, JSON.stringify(result));
-          MiscHelper.paginated(res, result, 200, 'http://localhost:3333/api/v1/book',totalPage, page, pages, startPage, endPage);    
+          MiscHelper.paginated(res, result, 200, 'http://' + process.env.SERVER_HOST + ':' + process.env.SERVER_PORT + '/api/v1/book',totalPage, page, pages, startPage, endPage);    
         })
         .catch(err => {
           MiscHelper.response(res, err, 404, 'Book not found!');
@@ -40,7 +40,7 @@ const bookController = {
       title,
       description,
       author,
-      img: `http://localhost:3333/uploads/${req.file.filename}`,
+      img: `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/uploads/${req.file.filename}`,
       status,
       rating,
       id_category
