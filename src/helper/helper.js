@@ -14,7 +14,7 @@ module.exports = {
     resultPrint.err = err || '';
     return res.status(resultPrint.statusCode).json(resultPrint);
   },
-  paginated: (res, result, status, url, total, page, start, limit, err) => {
+  paginated: (res, result, status, url, total, page, pages, start, limit, err) => {
     let resultPaginated = {};
     if (status != 200) {
       resultPaginated.status = 'Failed';
@@ -26,6 +26,7 @@ module.exports = {
     resultPaginated.status = 'Success!';
     resultPaginated.statusCode = status;
     resultPaginated.page = parseInt(page);
+    resultPaginated.pages = pages;
     resultPaginated.totalPage = Math.ceil(total / limit);
     resultPaginated.totalFound = result.length;
     resultPaginated.totalBook = total;

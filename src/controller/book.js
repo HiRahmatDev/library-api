@@ -8,13 +8,17 @@ const bookController = {
   getBooks: (req, res) => {
     conn.query('SELECT count(*) AS total from `books`', (err, result) => {
       const totalPage = result[0].total;
-      const {search, sort, page = 1, limit = 8} = req.query;
+      const {search, sort, page = 1, limit = 4} = req.query;
       const startPage = (page - 1) * limit;
       const endPage = limit;
+      const pages = [];
+      for (let i = 0; i < totalPage/limit; i++) {
+        pages.push(i + 1);
+      }
       bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
         .then(result => {
           client.setex('getAllBook', 3600, JSON.stringify(result));
-          MiscHelper.paginated(res, result, 200, 'http://localhost:3333/api/v1/book',totalPage, page, startPage, endPage);    
+          MiscHelper.paginated(res, result, 200, 'http://localhost:3333/api/v1/book',totalPage, page, pages, startPage, endPage);    
         })
         .catch(err => {
           MiscHelper.response(res, err, 404, 'Book not found!');
@@ -51,7 +55,14 @@ const bookController = {
   updateBook: (req, res) => {
     const idBook = req.params.idBook;
     const { title, description, author, img, status, id_category } = req.body;
-    const data = { title, description, author, img, status, id_category };
+    const data = {
+      title,
+      description,
+      author,
+      img,
+      status,
+      id_category
+    };
     bookModel.updateBook(data, idBook)
       .then(result => res.send(result))
       .catch(err => res.send(err));
