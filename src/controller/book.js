@@ -2,8 +2,8 @@ require('dotenv').config();
 const bookModel = require('../model/book');
 const MiscHelper = require('../helper/helper');
 const conn = require('../config/db');
-const redis = require('redis');
-const client = redis.createClient(process.env.PORT_REDIS);
+// const redis = require('redis');
+// const client = redis.createClient(process.env.PORT_REDIS);
 const bookController = {
   getBooks: (req, res) => {
     conn.query('SELECT count(*) AS total from `books`', (err, result) => {
@@ -17,7 +17,7 @@ const bookController = {
       }
       bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
         .then(result => {
-          client.setex('getAllBook', 3600, JSON.stringify(result));
+          // client.setex('getAllBook', 3600, JSON.stringify(result));
           MiscHelper.paginated(res, result, 200, 'http://localhost:3333/api/v1/book',totalPage, page, pages, startPage, endPage);    
         })
         .catch(err => {
