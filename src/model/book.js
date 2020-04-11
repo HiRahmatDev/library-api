@@ -9,21 +9,6 @@ const bookModel = {
           }
           resolve(result);
         });
-        if (sort) {
-          connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` WHERE lower(`books`.`title`) LIKE ? OR lower(`books`.`description`) LIKE ? OR lower(`books`.`author`) LIKE ? OR lower(`category`.`name_category`) LIKE ? ORDER BY `books`.`' + sort + '', [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`], (err, result) => {
-            if(err) {
-              reject(new Error(err));
-            }
-            resolve(result);
-          });
-        } else {
-          connection.query('SELECT `books`.*, `category`.`name_category` FROM `books` JOIN `category` ON `books`.`id_category` = `category`.`id` WHERE lower(`books`.`title`) LIKE ? OR lower(`books`.`description`) LIKE ? OR lower(`books`.`author`) LIKE ? OR lower(`category`.`name_category`) LIKE ?', [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`], (err, result) => {
-            if(err) {
-              reject(new Error(err));
-            }
-            resolve(result);
-          });
-        }
       } else {
         if (sort) {
           if (page || limit) {
