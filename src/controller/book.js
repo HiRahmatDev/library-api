@@ -8,7 +8,7 @@ const bookController = {
   getBooks: (req, res) => {
     conn.query('SELECT count(*) AS total from `books`', (err, result) => {
       const totalPage = result[0].total;
-      const {search, sort, page = 1, limit = 4} = req.query;
+      const {search, sort = 'title', page = 1, limit = 4} = req.query;
       const startPage = (page - 1) * limit;
       const endPage = limit;
       const pages = [];
