@@ -83,7 +83,7 @@ const bookController = {
       .catch(err => res.send(err));
   },
   loanBook: (req, res) => {
-    const {user, book} = req.headers;
+    const {user, book} = req.params;
     const dataLoan = {
       id_user: user,
       id_book: book,
