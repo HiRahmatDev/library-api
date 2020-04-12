@@ -24,7 +24,7 @@ Router
   .get('/loan', booksController.loanList)
   .get('/:idBook', booksController.bookDetail)
   .post('/insert', upload.single('img'), booksController.insertBook)
-  .post('/loan', booksController.loanBook)
+  .post('/loan/:user/:book', booksController.loanBook)
   .patch('/return', booksController.returnBook)
   .patch('/:idBook', upload.single('img'), booksController.updateBook)
   .delete('/:idBook', booksController.deleteBook);
