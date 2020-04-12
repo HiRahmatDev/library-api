@@ -81,7 +81,7 @@ const bookModel = {
   },
   loanBook: (dataLoan) => {
     return new Promise((resolve, reject) => {
-      connection.query('INSERT INTO `loan` SET ?', dataLoan, (err, result) => {
+      connection.query('INSERT INTO `loan` (`id_user`, `id_book`, `status_loan`) VALUES (?, ?, ?)', [dataLoan.id_user, dataLoan.id_book, dataLoan.status_loan], (err, result) => {
         if (err) {
           reject(new Error(err));
         }
