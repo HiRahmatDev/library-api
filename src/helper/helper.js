@@ -1,7 +1,7 @@
 module.exports = {
   response: (res, result, status, err) => {
     let resultPrint = {};
-    if (status != 200) {
+    if (status !== 200) {
       resultPrint.status = 'Failed';
       resultPrint.statusCode = status;
       resultPrint.result = result;
@@ -16,7 +16,7 @@ module.exports = {
   },
   paginated: (res, result, status, url, total, page, pages, start, limit, err) => {
     let resultPaginated = {};
-    if (status != 200) {
+    if (status !== 200) {
       resultPaginated.status = 'Failed';
       resultPaginated.statusCode = status;
       resultPaginated.result = result;

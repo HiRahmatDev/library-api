@@ -48,7 +48,7 @@ const userController = {
       .then((result) => {
         const dataUser = result[0];
         const checkedPass = bcrypt.compareSync(dataLogin.password, dataUser.password);
-        const token = jwt.sign({ id: dataUser.id, email: dataUser.email }, process.env.SECRET_KEY);
+        const token = jwt.sign({ id: dataUser.id, email: dataUser.email, role_id: dataUser.role_id }, process.env.SECRET_KEY);
         dataUser.token = token;
         delete dataUser.password;
         delete dataUser.salt;
@@ -72,7 +72,7 @@ const userController = {
   sendEmailVerif: (req, res) => {
     const tokenFromHeader = req.headers['x-access-token'];
     const token = jwt.verify(tokenFromHeader, process.env.SECRET_KEY);
-    const linkActivation = `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/user/confirm?key=${tokenFromHeader}`;
+    const linkActivation = `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT_FRONT}/user/confirm?key=${tokenFromHeader}`;
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

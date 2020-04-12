@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, './uploads');
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, file.originalname || 'default-image.jpg');
   },
   // setting file extension and size minimum here
 
@@ -25,8 +25,8 @@ Router
   .get('/:idBook', booksController.bookDetail)
   .post('/insert', upload.single('img'), booksController.insertBook)
   .post('/loan', booksController.loanBook)
-  // .post('/restore', booksController.restoreBook)
-  .patch('/:idBook', booksController.updateBook)
+  .patch('/return', booksController.returnBook)
+  .patch('/:idBook', upload.single('img'), booksController.updateBook)
   .delete('/:idBook', booksController.deleteBook);
 
 module.exports = Router;

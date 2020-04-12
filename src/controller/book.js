@@ -8,7 +8,7 @@ const bookController = {
   getBooks: (req, res) => {
     conn.query('SELECT count(*) AS total from `books`', (err, result) => {
       const totalPage = result[0].total;
-      const {search, sort = 'title', page = 1, limit = 4} = req.query;
+      const {search, sort = 'title', page = 1, limit = 8} = req.query;
       const startPage = (page - 1) * limit;
       const endPage = limit;
       const pages = [];
@@ -54,12 +54,12 @@ const bookController = {
   },
   updateBook: (req, res) => {
     const idBook = req.params.idBook;
-    const { title, description, author, img, status, id_category } = req.body;
+    const { title, description, author, status = 1, id_category } = req.body;
     const data = {
       title,
       description,
       author,
-      img,
+      img: `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/uploads/${req.file.filename}`,
       status,
       id_category
     };
@@ -75,12 +75,20 @@ const bookController = {
       })
       .catch(err => res.send(err));
   },
+  loanList: (req, res) => {
+    bookModel.loanList()
+      .then(result => {
+        MiscHelper.response(res, result, 200);
+      })
+      .catch(err => res.send(err));
+  },
   loanBook: (req, res) => {
     const {user, book} = req.query;
     const dataLoan = {
       id_user: user,
       id_book: book,
-      forfeit: 0
+      forfeit: 0,
+      status_loan: 1
     };
     bookModel.loanBook(dataLoan)
       .then(result => {
@@ -88,12 +96,18 @@ const bookController = {
       })
       .catch(err => res.send(err));
   },
-  loanList: (req, res) => {
-    bookModel.loanList()
-      .then(result => {
-        MiscHelper.response(res, result, 200);
+  returnBook: (req, res) => {
+    const {id} = req.query;
+    const dataReturn = {
+      id,
+      return_at: new Date(),
+      status_loan: 0
+    };
+    bookModel.returnBook(dataReturn)
+      .then((result) => {
+        res.send(result);
       })
-      .catch(err => res.send(err));
+      .catch((err) => res.send(err));
   }
 };
 
