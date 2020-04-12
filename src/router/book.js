@@ -22,8 +22,8 @@ const upload = multer({
 Router
   .get('/', booksController.getBooks)
   .get('/loan', booksController.loanList)
+  .get('/loan/:user/:book', booksController.loanBook)
   .get('/:idBook', booksController.bookDetail)
-  .post('/loan/:user/:book', booksController.loanBook)
   .post('/insert', upload.single('img'), booksController.insertBook)
   .patch('/return', booksController.returnBook)
   .patch('/:idBook', upload.single('img'), booksController.updateBook)
