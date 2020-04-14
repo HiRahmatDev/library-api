@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 const booksController = require('../controller/book');
-// const redisHelper = require('../helper/redis');
+const redisHelper = require('../helper/redis');
 
 // multer
 const multer = require('multer');
@@ -20,13 +20,13 @@ const upload = multer({
 });
 
 Router
-  .get('/', booksController.getBooks)
+  .get('/', redisHelper.cacheGetAllBook, booksController.getBooks)
   .get('/loan', booksController.loanList)
-  .get('/:idBook', booksController.bookDetail)
+  .get('/:idBook', redisHelper.clearGetAllBook, booksController.bookDetail)
   .post('/loan/:user/:book', booksController.loanBook)
-  .post('/insert', upload.single('img'), booksController.insertBook)
+  .post('/insert', redisHelper.clearGetAllBook, upload.single('img'), booksController.insertBook)
   .patch('/return', booksController.returnBook)
-  .patch('/:idBook', upload.single('img'), booksController.updateBook)
-  .delete('/:idBook', booksController.deleteBook);
+  .patch('/:idBook', redisHelper.clearGetAllBook, upload.single('img'), booksController.updateBook)
+  .delete('/:idBook', redisHelper.clearGetAllBook, booksController.deleteBook);
 
 module.exports = Router;

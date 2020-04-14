@@ -14,14 +14,14 @@ module.exports = {
     resultPrint.err = err || '';
     return res.status(resultPrint.statusCode).json(resultPrint);
   },
-  paginated: (res, result, status, url, total, page, pages, start, limit, err) => {
+  paginated: (result, status, url, total, page, pages, start, limit, err) => {
     let resultPaginated = {};
     if (status !== 200) {
       resultPaginated.status = 'Failed';
       resultPaginated.statusCode = status;
       resultPaginated.result = result;
       resultPaginated.err = err || '';
-      return res.status(resultPaginated.statusCode).json(resultPaginated);
+      return resultPaginated;
     }
     resultPaginated.status = 'Success!';
     resultPaginated.statusCode = status;
@@ -42,6 +42,6 @@ module.exports = {
     }
     resultPaginated.result = result;
     resultPaginated.err = err || '';
-    return res.status(resultPaginated.statusCode).json(resultPaginated);
+    return resultPaginated;
   }
 };

@@ -2,9 +2,9 @@ require('dotenv').config();
 const bookModel = require('../model/book');
 const MiscHelper = require('../helper/helper');
 const conn = require('../config/db');
-// const redis = require('redis');
-// const client = redis.createClient(process.env.PORT_REDIS);
-const bookController = {
+const redis = require('redis');
+const client = redis.createClient(process.env.PORT_REDIS);
+module.exports = {
   getBooks: (req, res) => {
     conn.query('SELECT count(*) AS total from `books`', (err, result) => {
       const totalPage = result[0].total;
@@ -17,8 +17,9 @@ const bookController = {
       }
       bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
         .then(result => {
-          // client.setex('getAllBook', 3600, JSON.stringify(result));
-          MiscHelper.paginated(res, result, 200, 'http://' + process.env.SERVER_HOST + ':' + process.env.SERVER_PORT + '/api/v1/book',totalPage, page, pages, startPage, endPage);    
+          const resultPaginated = MiscHelper.paginated(result, 200, 'http://' + process.env.SERVER_HOST + ':' + process.env.SERVER_PORT + '/api/v1/book',totalPage, page, pages, startPage, endPage);
+          client.setex('getAllBook', 3600, JSON.stringify(resultPaginated));
+          res.json(resultPaginated);
         })
         .catch(err => {
           MiscHelper.response(res, err, 404, 'Book not found!');
@@ -110,5 +111,3 @@ const bookController = {
       .catch((err) => res.send(err));
   }
 };
-
-module.exports = bookController;
