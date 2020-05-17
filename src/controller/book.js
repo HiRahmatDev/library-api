@@ -8,7 +8,7 @@ module.exports = {
   getBooks: (req, res) => {
     conn.query('SELECT count(*) AS total from `books`', (err, result) => {
       const totalPage = result[0].total;
-      const {search, sort = 'title', page = 1, limit = 8} = req.query;
+      const {search, sort = 'title', page = 1, limit = 4} = req.query;
       const startPage = (page - 1) * limit;
       const endPage = limit;
       const pages = [];
@@ -18,7 +18,9 @@ module.exports = {
       bookModel.getBooks(search, sort, parseInt(startPage), parseInt(endPage))
         .then(result => {
           const resultPaginated = MiscHelper.paginated(result, 200, 'http://' + process.env.SERVER_HOST + ':' + process.env.SERVER_PORT + '/api/v1/book',totalPage, page, pages, startPage, endPage);
-          client.setex('getAllBook', 3600, JSON.stringify(resultPaginated));
+          if (!search) {
+            client.setex('getAllBook', 3600, JSON.stringify(resultPaginated));
+          }
           res.json(resultPaginated);
         })
         .catch(err => {
@@ -36,22 +38,26 @@ module.exports = {
       .catch(err => res.send(err));
   },
   insertBook: (req, res) => {
-    const { title, description, author, status = 1, rating = 0, id_category = 1 } = req.body;
+    const { title, description, author, img, status = 1, rating = 0, id_category = 1 } = req.body;
     const data = {
       title,
       description,
       author,
-      img: `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/uploads/${req.file.filename}`,
+      img,
+      // img: `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/uploads/${req.file.filename || 'default-image.jpg'}`,
       status,
       rating,
       id_category
     };
-    bookModel.insertBook(data)
-      .then(result => {
-        result.info = req.file;
-        MiscHelper.response(res, result, 200);
-      })
-      .catch(err => res.send(err));
+    res.json({
+      data
+    });
+    // bookModel.insertBook(data)
+    //   .then(result => {
+    //     result.info = req.file;
+    //     MiscHelper.response(res, result, 200);
+    //   })
+    //   .catch(err => res.send(err));
   },
   updateBook: (req, res) => {
     const idBook = req.params.idBook;

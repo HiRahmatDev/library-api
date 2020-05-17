@@ -20,7 +20,7 @@ const upload = multer({
 });
 
 Router
-  .get('/', redisHelper.cacheGetAllBook, booksController.getBooks)
+  .get('/', booksController.getBooks)
   .get('/loan', booksController.loanList)
   .get('/:idBook', redisHelper.clearGetAllBook, booksController.bookDetail)
   .post('/loan/:user/:book', booksController.loanBook)
