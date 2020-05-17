@@ -1,4 +1,12 @@
-# Library Loan Book API [![Release Version](https://img.shields.io/badge/release-v.1.0-blue)](https://github.com/HiRahmat-Dev/library-api/releases/tag/1.0) [![Node JS](https://img.shields.io/badge/Dependencies-Express%20JS-green)](https://nodejs.org/en/)
+# Library Loan Book API
+
+[![Release Version](https://img.shields.io/badge/release-v.1.0-blue)](https://github.com/HiRahmat-Dev/library-api/releases/tag/1.0) [![Node JS](https://img.shields.io/badge/Dependencies-Express%20JS-green)](https://nodejs.org/en/)
+![GitHub repo size](https://img.shields.io/github/repo-size/HiRahmat-Dev/library-api)
+![GitHub contributors](https://img.shields.io/github/contributors/HiRahmat-Dev/library-api)
+![GitHub stars](https://img.shields.io/github/stars/HiRahmat-Dev/library-api?style=social)
+![GitHub forks](https://img.shields.io/github/forks/HiRahmat-Dev/library-api?style=social)
+![Tweet](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2FHiRahmat-Dev%2Flibrary-api
+)
 <p align="center">
   <a href="https://nodejs.org/">
     <img src="https://cdn-images-1.medium.com/max/871/1*d2zLEjERsrs1Rzk_95QU9A.png">
@@ -8,9 +16,11 @@
 ## Table of Contents
 - [Prerequiste](#prerequiste)
 - [Instalation](#installation)
-
 - [Link Collection Postman](#link-collection-postman)
 - [Structur Folder](#structur-folder)
+- [Contributing](#contributing)
+- [Related Project](#related-project)
+- [Contributors](#contributors)
 
 ## Prerequiste
 - Node.js - Download and Install [Node.js](https://nodejs.org/en/).
@@ -31,12 +41,12 @@ $ nano .env
 ```
 
 ```
-DB_HOST="Your_Host"
-DB_USER="Your_Username"
-DB_PASSWORD="Your_Password"
-DB_NAME="Your_Table"
+DB_HOST=YOUR_HOST
+DB_USER=YOUR_USER
+DB_PASSWORD=YOUR_PASSWORD
+DB_NAME=YOUR_TABLE-NAME
 
-SERVER_PORT=8000
+SERVER_PORT=YOUR_PORT
 
 ```
 
@@ -68,6 +78,22 @@ $ npm run serve
 +---server.js
 ```
 
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+Fork the Project
+1. Create your Feature Branch  ```git checkout -b [feature]```
+2. Commit your Changes ```git commit -m 'Add some feature'```
+3. Push to the Branch ```git push origin [feature]```
+4. Open a Pull Request
+
+## Related Project
+
+* [`Frontend-Library-VueJS`](https://github.com/HiRahmat-Dev/library-web-vuejs)
+* [`Backend-Library`](https://github.com/HiRahmat-Dev/library-api)
+
+
 ## Contributors
 <center>
   <table>
@@ -81,7 +107,3 @@ $ npm run serve
     </tr>
   </table>
 </center>
-
-### License
-----
-[Website](http://www.sekolahinovator.org) © [Rahmat Hidayatullah](https://github.com/HiRahmat-Dev/)
