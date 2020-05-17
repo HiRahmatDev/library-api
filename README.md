@@ -25,6 +25,7 @@
 ## Prerequiste
 - Node.js - Download and Install [Node.js](https://nodejs.org/en/).
 - MySQL - Download and Install [MySQL](https://www.mysql.com/downloads/) - Make sure it's running on the default port.
+- Redis - Download and Install [Redis](https://redis.io/)
 
 ## Installation
 ### Clone
@@ -41,12 +42,22 @@ $ nano .env
 ```
 
 ```
-DB_HOST=YOUR_HOST
-DB_USER=YOUR_USER
-DB_PASSWORD=YOUR_PASSWORD
-DB_NAME=YOUR_TABLE-NAME
+DB_HOST=YOUR_DB_HOST
+DB_USER=YOUR_DB_USER
+DB_PASSWORD=YOUR_DB_PASSWORD
+DB_NAME=YOUR_TABLE_NAME
 
 SERVER_PORT=YOUR_PORT
+
+EMAIL=YOUR_EMAIL_ACTIVATION
+PASSWORD=YOUR_EMAIL_PASSWORD
+
+SECRET_KEY=YOUR_SECRET_KEY
+
+SERVER_HOST=localhost
+SERVER_PORT=YOUR_HOST
+SERVER_PORT_FRONT=YOUR_PORT_FRONT_END
+PORT_REDIS=YOUR_PORT_REDIS / default => 6379
 
 ```
 
