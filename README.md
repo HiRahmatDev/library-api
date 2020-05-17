@@ -17,7 +17,7 @@
 - [Prerequiste](#prerequiste)
 - [Instalation](#installation)
 - [Link Collection Postman](#link-collection-postman)
-- [Structur Folder](#structur-folder)
+- [Structure Folder](#structure-folder)
 - [Contributing](#contributing)
 - [Related Project](#related-project)
 - [Contributors](#contributors)
