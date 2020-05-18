@@ -20,7 +20,6 @@
 - [Structure Folder](#structure-folder)
 - [Contributing](#contributing)
 - [Related Project](#related-project)
-- [Contributors](#contributors)
 
 ## Prerequiste
 - Node.js - Download and Install [Node.js](https://nodejs.org/en/).
@@ -103,18 +102,3 @@ Fork the Project
 
 * [`Frontend-Library-VueJS`](https://github.com/HiRahmat-Dev/library-web-vuejs)
 * [`Backend-Library`](https://github.com/HiRahmat-Dev/library-api)
-
-
-## Contributors
-<center>
-  <table>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/HiRahmat-Dev/">
-          <img width="150" src="https://avatars2.githubusercontent.com/u/55150659?s=460&u=c7171bb4128787c303efdce0d62bc86289f1211b&v=4" alt="Rahmat Hidayatullah"><br/>
-          <b>Rahmat Hidayatullah</b>
-        </a>
-      </td>
-    </tr>
-  </table>
-</center>
